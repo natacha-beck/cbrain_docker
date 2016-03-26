@@ -134,7 +134,7 @@ $ sudo usermod -aG docker username
 
 
         <section>
-          <h3>How to package pipeline, interactive</h3>
+          <h3>How to package pipeline: interactive</h3>
           <ul>
             <li>Maybe not the best choice but easy</li>
             <li>Incremental process with no real history</li>
@@ -142,7 +142,7 @@ $ sudo usermod -aG docker username
         </section>
 
         <section>
-          <h3>How to package Pipeline, interactive</h3>
+          <h3>How to package Pipeline: interactive</h3>
           <pre><code data-trim data-noescape>
 # Download/extract/run centos images with docker
 $ docker run -it centos
@@ -155,7 +155,7 @@ Status: Downloaded newer image for centos:latest
         </section>
 
         <section>
-          <h3>How to package Pipeline, interactive</h3>
+          <h3>How to package Pipeline: interactive</h3>
           <pre><code data-trim data-noescape>
 # Install git
 [root@5af8c69637b2 /]# yum install git
@@ -172,7 +172,7 @@ $ docker commit -m "Git + HelloWord" 5af8c6 nbeck/cbrain_docker_i
         </section>
 
         <section>
-          <h3>How to package Pipeline, interactive</h3>
+          <h3>How to package Pipeline: interactive</h3>
           <pre><code data-trim data-noescape>
 # Run the script 'outside' of the container
 $ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
@@ -181,7 +181,7 @@ Hello World!
         </section>
 
         <section>
-          <h3>How to package Pipeline, Dockerfile</h3>
+          <h3>How to package Pipeline: Dockerfile</h3>
           <ul>
             <li>Better version control</li>
             <li>Better documentation</li>
@@ -189,14 +189,14 @@ Hello World!
         </section>
 
         <section>
-          <h3>How to package Pipeline, Dockerfile</h3>
+          <h3>How to package Pipeline: Dockerfile</h3>
 $ mkdir docker_d
 $ cd docker_d
 $ vi DockerFile
         </section>
 
         <section>
-          <h3>How to package Pipeline, Dockerfile</h3>
+          <h3>How to package Pipeline: Dockerfile</h3>
           <pre><code data-trim data-noescape>
 FROM centos
 
@@ -208,7 +208,7 @@ RUN git clone https://github.com/natacha-beck/bash_hello_world.git
 
 
         <section>
-          <h3>How to package Pipeline, Dockerfile</h3>
+          <h3>How to package Pipeline: Dockerfile</h3>
           <pre><code data-trim data-noescape>
 $ docker build -t nbeck/cbrain_docker_d .
 $ docker build -t nbeck/cbrain_docker_d .
@@ -224,7 +224,7 @@ Successfully built 5f2ec36899e5
         </section>
 
         <section>
-          <h3>How to package Pipeline, Dockerfile</h3>
+          <h3>How to package Pipeline: Dockerfile</h3>
           <pre><code data-trim data-noescape>
 # Run the script 'outside' of the container
 $ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
@@ -233,7 +233,7 @@ Hello World!
         </section>
 
         <section>
-          <h3>Even better, use Autobuild</h3>
+          <h3>Even better: Autobuild</h3>
           <ul>
             <li>Built exactly as specified</li>
             <li>Dockerfile available to anyone with acess to you Docker Hub repo</li>
@@ -242,7 +242,7 @@ Hello World!
         </section>
 
         <section>
-          <h3>Even better, use Autobuild</h3>
+          <h3>Even better: Autobuild</h3>
           <ul>
           <li>Create a Github repo with your Dockerfile</li>
           <li>Example [here](https://github.com/natacha-beck/bash_hello_world_a)</li>
@@ -250,22 +250,22 @@ Hello World!
         </section>
 
         <section>
-            <h3>Even better, use Autobuild</h3>
+            <h3>Even better: Autobuild</h3>
             <img data-src="img/auto1.png">
         </section>
 
         <section>
-            <h3>Even better, use Autobuild</h3>
+            <h3>Even better: Autobuild</h3>
             <img data-src="img/select.png">
         </section>
 
         <section>
-            <h3>Even better, use Autobuild</h3>
+            <h3>Even better: Autobuild</h3>
             <img data-src="img/after_auto.png">
         </section>
 
         <section>
-          <h3>Even better, use Autobuild</h3>
+          <h3>Even better: Autobuild</h3>
           <pre><code data-trim data-noescape>
 $ docker pull nbeck/bash_hello_world_a
 Using default tag: latest
