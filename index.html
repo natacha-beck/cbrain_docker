@@ -52,6 +52,17 @@
         </section>
 
         <section>
+          <h3>Why use Docker in CBRAIN</h3>
+            <ul>
+             <li>Bottleneck of tools integration in CBRAIN</li>
+             <li>Painfull to install pipeline on Compute Canada</li>
+             <li>Example: Mammouth-P vs Mammouth-S</li>
+             <li>Should (re)-install on each cluster</li>
+             <li>Better version control of the version by owner of the pipeline</li>
+            </ul>
+        </section>
+
+        <section>
           <h3>What is Docker?</h3>
           <ul>
             <li>Motto: Build, Ship, Run</li>
@@ -63,9 +74,9 @@
         <section>
           <h3>What is Docker?</h3>
           <ul>
-            <li>A container contain a piece of software wit everything it need to run</li>
-            <li>Code, system tools, libraries...</li>
-            <li>So the software should always run the same (not depending of the environment)</li>
+            <li>A container = Piece of software + everything it need to run</li>
+            <li>E.g: Code, system tools, libraries...</li>
+            <li>Software always run the same (not depending of the environment)</li>
           </ul>
         </section>
 
@@ -73,9 +84,9 @@
           <h3>Difference between VM and Docker?</h3>
           <ul>
             <li>Containers include app and all the dependencies</li>
-            <li>BUT share the kernel between each other</li>
+            <li>BUT share the kernel</li>
             <li>So it is light, more portable and efficient than VM</li>
-            <li>It is supported by Compute Canada! (On Guillimin for the moment,Mammouth soon)</li>
+            <li>It is supported by Compute Canada! (On Guillimin for the moment, Mammouth soon)</li>
           </ul>
         </section>
 
@@ -83,7 +94,7 @@
           <h3>Limitations?</h3>
           <ul>
             <li>Run on Unix system</li>
-            <li>On Mac and Windows it require VM!</li>
+            <li>On Mac and Windows it require VM</li>
             <li>Painfull to use on Mac (own experience)</li>
           </ul>
         </section>
@@ -91,57 +102,183 @@
         <section>
           <h3>What is <a href="https://hub.docker.com/">DockerHub</a>?</h3>
           <ul>
-            <li>Similar to Github but for Docker container sharing</li>
+            <li>Similar to Github but for Docker container</li>
             <li>Public/private repo</li>
-            <li>Collaborators, can have some privilege (example: push new version)</li>
+            <li>Collaborators, can have some privileges (ex: push new version)</li>
           </ul>
         </section>
 
         <section>
-          <h3>Why use Docker in CBRAIN</h3>
-            <ul>
-             <li></li>
-             <li></li>
-             <li></li>
-            </ul>
-        </section>
-
-
-        <section>
           <h3>How to install Docker?</h3>
+          <ul>
+            <li>Not so difficult all information <a href="https://docs.docker.com/engine/installation/">here</a></li>
+            <li>Example on Ubuntu</li>
+            <pre><code data-trim data-noescape>
+# Update package index
+$ sudo apt-get update
+
+# Install docker-engine
+$ sudo apt-get install docker-engine
+
+# Start docker daemon
+$ sudo service docker
+
+# Run the hello-world to test
+$ sudo docker run hello-world
+
+# Add a docker group (optionnal but recommended)
+$ sudo usermod -aG docker username
+            </code></pre>
+          </ul>
         </section>
 
 
         <section>
           <h3>How to package pipeline, interactive</h3>
+          <ul>
+            <li>Maybe not the best choice but easy</li>
+            <li>Incremental process with no real history</li>
+          </ul>
         </section>
 
         <section>
           <h3>How to package Pipeline, interactive</h3>
-        </section>
-
-        <section>
-          <h3>How to package Pipeline, Docker file</h3>
+          <pre><code data-trim data-noescape>
+# Download/extract/run centos images with docker
+$ docker run -it centos
+Unable to find image 'centos:latest' locally
+latest: Pulling from library/centos
+a3ed95caeb02: Pull complete..
+Digest: sha256:381f21e4c7b3724c6f420b2bcfa6e13e47ed155192869a2a04fa10f944c78476
+Status: Downloaded newer image for centos:latest
+          </code></pre>
         </section>
 
         <section>
           <h3>How to package Pipeline, interactive</h3>
+          <pre><code data-trim data-noescape>
+# Install git
+[root@5af8c69637b2 /]# yum install git
+# Clone git repo
+[root@5af8c69637b2 /]# git clone https://github.com/natacha-beck/bash_hello_world.git
+# Run the hello world example
+[root@5af8c69637b2 /]# ./bash_hello_world/hello_world.sh
+Hello World!
+[root@5af8c69637b2 /]# exit
+
+# Save your images
+$ docker commit -m "Git + HelloWord" 5af8c6 nbeck/cbrain_docker_i
+        </code></pre>
         </section>
 
         <section>
           <h3>How to package Pipeline, interactive</h3>
+          <pre><code data-trim data-noescape>
+# Run the script 'outside' of the container
+$ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
+Hello World!
+          </code></pre>
         </section>
 
         <section>
           <h3>How to package Pipeline, Dockerfile</h3>
+          <ul>
+            <li>Better version control</li>
+            <li>Better documentation</li>
+          </ul>
         </section>
 
         <section>
           <h3>How to package Pipeline, Dockerfile</h3>
+$ mkdir docker_d
+$ cd docker_d
+$ vi DockerFile
         </section>
 
         <section>
           <h3>How to package Pipeline, Dockerfile</h3>
+          <pre><code data-trim data-noescape>
+FROM centos
+
+RUN yum update -y && yum install -y git
+
+RUN git clone https://github.com/natacha-beck/bash_hello_world.git
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h3>How to package Pipeline, Dockerfile</h3>
+          <pre><code data-trim data-noescape>
+$ docker build -t nbeck/cbrain_docker_d .
+$ docker build -t nbeck/cbrain_docker_d .
+Sending build context to Docker daemon 2.048 kB
+Step 1 : FROM centos
+ ---> d0e7f81ca65c
+Step 2 : RUN yum update -y && yum install -y git
+ ---> Running in 5acbe72d2038
+Loaded plugins: fastestmirror, ovl
+...
+Successfully built 5f2ec36899e5
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>How to package Pipeline, Dockerfile</h3>
+          <pre><code data-trim data-noescape>
+# Run the script 'outside' of the container
+$ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
+Hello World!
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Even better, use Autobuild</h3>
+          <ul>
+            <li>Built exactly as specified</li>
+            <li>Dockerfile available to anyone with acess to you Docker Hub repo</li>
+            <li>Your repo is kept up-to-date with code changes automatically</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Even better, use Autobuild</h3>
+          <ul>
+          <li>Create a Github repo with your Dockerfile</li>
+          <li>Example [here](https://github.com/natacha-beck/bash_hello_world_a)</li>
+          </ul>
+        </section>
+
+        <section>
+            <h3>Even better, use Autobuild</h3>
+            <img data-src="img/auto1.png">
+        </section>
+
+        <section>
+            <h3>Even better, use Autobuild</h3>
+            <img data-src="img/select.png">
+        </section>
+
+        <section>
+            <h3>Even better, use Autobuild</h3>
+            <img data-src="img/after_auto.png">
+        </section>
+
+        <section>
+          <h3>Even better, use Autobuild</h3>
+          <pre><code data-trim data-noescape>
+$ docker pull nbeck/bash_hello_world_a
+Using default tag: latest
+latest: Pulling from nbeck/bash_hello_world_a
+a3ed95caeb02: Already exists
+196355c4b639: Already exists
+0a146766eb18: Pull complete
+790c63ab106f: Pull complete
+Digest: sha256:f1b2c46f83841c585fb0b8156113401d60f7bf314a72709b155e967302ee3c78
+Status: Downloaded newer image for nbeck/bash_hello_world_a:latest
+nbeck@NaN:~$ docker run nbeck/bash_hello_world_a ./bash_hello_world/hello_world.sh
+Hello World!
+          </code></pre>
         </section>
 
         <!-- Thanks -->
