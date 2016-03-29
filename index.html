@@ -45,20 +45,20 @@
 
         <!-- 1st slide-->
         <section>
-          <h2>Tools integration in CBRAIN with Dockerfile</h2>
+          <h2>Tools integration in CBRAIN with Docker</h2>
           <p>
             <small><a href="https://github.com/natacha-beck/">Natacha Beck</a></small>
           </p>
         </section>
 
         <section>
-          <h3>Why use Docker in CBRAIN</h3>
+          <h3>Why use Docker in CBRAIN?</h3>
             <ul>
              <li>Bottleneck of tools integration in CBRAIN</li>
-             <li>Painfull to install pipeline on Compute Canada</li>
+             <li>Painful to install pipeline on Compute Canada</li>
              <li>Example: Mammouth-P vs Mammouth-S</li>
              <li>Should (re)-install on each cluster</li>
-             <li>Better version control of the version by owner of the pipeline</li>
+             <li>Better control of the version by owner of the pipeline</li>
             </ul>
         </section>
 
@@ -81,7 +81,7 @@
         </section>
 
         <section>
-          <h3>Difference between VM and Docker?</h3>
+          <h3>Difference between Virtual Machine and Docker?</h3>
           <ul>
             <li>Containers include app and all the dependencies</li>
             <li>BUT share the kernel</li>
@@ -93,15 +93,16 @@
         <section>
           <h3>Limitations?</h3>
           <ul>
-            <li>Run on Unix system</li>
-            <li>On Mac and Windows it require VM</li>
-            <li>Painfull to use on Mac (own experience)</li>
+            <li>Runs on Unix systems</li>
+            <li>On Mac and Windows, it uses a VM (no native docker support)</li>
+            <li>Painful to use on Mac (own experience)</li>
           </ul>
         </section>
 
         <section>
-          <h3>What is <a href="https://hub.docker.com/">DockerHub</a>?</h3>
+          <h3>What is <a href="https://hub.docker.com/">Docker Hub</a>?</h3>
           <ul>
+            <li>External service for people to manage their containers</li>
             <li>Similar to Github but for Docker container</li>
             <li>Public/private repo</li>
             <li>Collaborators, can have some privileges (ex: push new version)</li>
@@ -109,7 +110,7 @@
         </section>
 
         <section>
-          <h3>How to install Docker?</h3>
+          <h3>How to install Docker for development?</h3>
           <ul>
             <li>Not so difficult all information <a href="https://docs.docker.com/engine/installation/">here</a></li>
             <li>Example on Ubuntu</li>
@@ -132,12 +133,27 @@ $ sudo usermod -aG docker username
           </ul>
         </section>
 
+        <section>
+          <h3>Three ways to prepare a containers</h3>
+          <ul>
+            <li>Intercative</li>
+            <li>Dockerfile</li>
+            <li>Autobuild</li>
+          </ul>
+        </section>
 
         <section>
           <h3>How to package pipeline: interactive</h3>
           <ul>
             <li>Maybe not the best choice but easy</li>
             <li>Incremental process with no real history</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>"Hello World!" Demo</h3>
+          <ul>
+            <li><a href="https://github.com/natacha-beck/bash_hello_world">My fake tool: "Hello World!" bash script</a></li>
           </ul>
         </section>
 
@@ -175,6 +191,7 @@ $ docker commit -m "Git + HelloWord" 5af8c6 nbeck/cbrain_docker_i
           <h3>How to package Pipeline: interactive</h3>
           <pre><code data-trim data-noescape>
 # Run the script 'outside' of the container
+$ git images
 $ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
 Hello World!
           </code></pre>
@@ -190,9 +207,11 @@ Hello World!
 
         <section>
           <h3>How to package Pipeline: Dockerfile</h3>
+            <pre><code data-trim data-noescape>
 $ mkdir docker_d
 $ cd docker_d
 $ vi DockerFile
+            </code></pre>
         </section>
 
         <section>
@@ -227,6 +246,7 @@ Successfully built 5f2ec36899e5
           <h3>How to package Pipeline: Dockerfile</h3>
           <pre><code data-trim data-noescape>
 # Run the script 'outside' of the container
+$ git images
 $ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
 Hello World!
           </code></pre>
@@ -245,7 +265,7 @@ Hello World!
           <h3>Even better: Autobuild</h3>
           <ul>
           <li>Create a Github repo with your Dockerfile</li>
-          <li>Example [here](https://github.com/natacha-beck/bash_hello_world_a)</li>
+          <li>Example <a href="https://github.com/natacha-beck/bash_hello_world_a">here</a></li>
           </ul>
         </section>
 
