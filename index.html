@@ -47,7 +47,7 @@
         <section>
           <h2>Tools integration in CBRAIN with Docker</h2>
           <p>
-            <small><a href="https://github.com/natacha-beck/">Natacha Beck</a></small>
+            <small><a href="https://github.com/natacha-beck/" target="_blank">Natacha Beck</a></small>
           </p>
         </section>
 
@@ -56,32 +56,32 @@
             <ul>
              <li>Bottleneck of tools integration in CBRAIN</li>
              <li>Painful to install pipeline on Compute Canada</li>
-             <li>Example: Mammouth-P vs Mammouth-S</li>
+             <li>Example: Mammouth-S (CBRAIN) vs Mammouth-P</li>
              <li>Should (re)-install on each cluster</li>
              <li>Better control of the version by owner of the pipeline</li>
             </ul>
         </section>
 
         <section>
-          <h3>What is Docker?</h3>
+          <h3>What is <a href="https://www.docker.com/" target="_blank">Docker</a>?</h3>
           <ul>
-            <li>Motto: Build, Ship, Run</li>
             <li>Open platform for distributed applications</li>
             <li>Allow you to package your app with all its dependencies</li>
+            <li>Motto: Build, Ship, Run</li>
           </ul>
         </section>
 
         <section>
-          <h3>What is Docker?</h3>
+          <h3>What is <a href="https://www.docker.com/" target="_blank">Docker</a>?</h3>
           <ul>
-            <li>A container = Piece of software + everything it need to run</li>
+            <li>A container/image = Piece of software + everything it need to run</li>
             <li>E.g: Code, system tools, libraries...</li>
             <li>Software always run the same (not depending of the environment)</li>
           </ul>
         </section>
 
         <section>
-          <h3>Difference between Virtual Machine and Docker?</h3>
+          <h3><a href="https://www.docker.com/what-docker" target="_blank">Difference between Virtual Machine and Docker?</a></h3>
           <ul>
             <li>Containers include app and all the dependencies</li>
             <li>BUT share the kernel</li>
@@ -91,16 +91,17 @@
         </section>
 
         <section>
-          <h3>Limitations?</h3>
+          <h3>Limitations of Docker?</h3>
           <ul>
             <li>Runs on Unix systems</li>
             <li>On Mac and Windows, it uses a VM (no native docker support)</li>
             <li>Painful to use on Mac (own experience)</li>
+            <li><a href="https://blog.docker.com/2016/03/docker-for-mac-windows-beta/" target="_blank">Not anymore true, since March 2016 but it's beta</a></li>
           </ul>
         </section>
 
         <section>
-          <h3>What is <a href="https://hub.docker.com/">Docker Hub</a>?</h3>
+          <h3>What is <a href="https://hub.docker.com/" target="_blank">Docker Hub</a>?</h3>
           <ul>
             <li>External service for people to manage their containers</li>
             <li>Similar to Github but for Docker container</li>
@@ -110,9 +111,14 @@
         </section>
 
         <section>
+          <h3>Relationship between Docker/Docker Hub/CBRAIN</h3>
+          <img src="img/relation.png">
+        </section>
+
+        <section>
           <h3>How to install Docker for development?</h3>
           <ul>
-            <li>Not so difficult all information <a href="https://docs.docker.com/engine/installation/">here</a></li>
+            <li>Not so difficult, all information <a href="https://docs.docker.com/engine/installation/" target="_blank">here</a></li>
             <li>Example on Ubuntu</li>
             <pre><code data-trim data-noescape>
 # Update package index
@@ -151,10 +157,7 @@ $ sudo usermod -aG docker username
         </section>
 
         <section>
-          <h3>"Hello World!" Demo</h3>
-          <ul>
-            <li><a href="https://github.com/natacha-beck/bash_hello_world">My fake tool: "Hello World!" bash script</a></li>
-          </ul>
+          <h3><a href="https://github.com/natacha-beck/bash_hello_world" target="_blank">"Hello World!" Demo</a></h3>
         </section>
 
         <section>
@@ -247,59 +250,20 @@ Successfully built 5f2ec36899e5
           <pre><code data-trim data-noescape>
 # Run the script 'outside' of the container
 $ git images
-$ docker run  nbeck/cbrain_docker_i ./bash_hello_world/hello_world.sh
+$ docker run  nbeck/cbrain_docker_d ./bash_hello_world/hello_world.sh
 Hello World!
           </code></pre>
         </section>
 
         <section>
-          <h3>Even better: Autobuild</h3>
+          <h3><a href="https://docs.docker.com/docker-hub/builds/">Even better: Autobuild?</a></h3>
           <ul>
-            <li>Built exactly as specified</li>
             <li>Dockerfile available to anyone with acess to you Docker Hub repo</li>
             <li>Your repo is kept up-to-date with code changes automatically</li>
+            <li>Idea link Guthub repo and Docker Hub repo</li>
           </ul>
         </section>
 
-        <section>
-          <h3>Even better: Autobuild</h3>
-          <ul>
-          <li>Create a Github repo with your Dockerfile</li>
-          <li>Example <a href="https://github.com/natacha-beck/bash_hello_world_a">here</a></li>
-          </ul>
-        </section>
-
-        <section>
-            <h3>Even better: Autobuild</h3>
-            <img data-src="img/auto1.png">
-        </section>
-
-        <section>
-            <h3>Even better: Autobuild</h3>
-            <img data-src="img/select.png">
-        </section>
-
-        <section>
-            <h3>Even better: Autobuild</h3>
-            <img data-src="img/after_auto.png">
-        </section>
-
-        <section>
-          <h3>Even better: Autobuild</h3>
-          <pre><code data-trim data-noescape>
-$ docker pull nbeck/bash_hello_world_a
-Using default tag: latest
-latest: Pulling from nbeck/bash_hello_world_a
-a3ed95caeb02: Already exists
-196355c4b639: Already exists
-0a146766eb18: Pull complete
-790c63ab106f: Pull complete
-Digest: sha256:f1b2c46f83841c585fb0b8156113401d60f7bf314a72709b155e967302ee3c78
-Status: Downloaded newer image for nbeck/bash_hello_world_a:latest
-nbeck@NaN:~$ docker run nbeck/bash_hello_world_a ./bash_hello_world/hello_world.sh
-Hello World!
-          </code></pre>
-        </section>
 
         <!-- Thanks -->
         <section>
